@@ -1,4 +1,4 @@
-## To showcase one of the utilities that I have, I created a set of files that ranged from 0 to a given value, and then randomly changed 
+## To showcase one of the utilities I have, I created a set of files that ranged from 0 to a given value, and then randomly changed 
 ## The creation date of such files
 
 from random import randint
