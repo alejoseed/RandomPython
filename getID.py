@@ -19,10 +19,14 @@ params = {
 }
 
 def main():
-        
-    with open('mangaIDs.csv') as csvfile:
-        data = csvfile.readlines() 
-        lastRow = data[-1]     
+    with open('mangaIDs.csv', 'a+', encoding='utf-8') as csvfile:
+        csvfile = csvfile.readlines() 
+    
+        try:
+            lastRow = csvfile[-1]
+        except IndexError:
+            lastRow = ''
+
         while True:
             r = requests.get(baseurl, params=params)
             ## Add a time delay here for 2 seconds
@@ -34,15 +38,13 @@ def main():
             contentrating = (data['data']['attributes']['contentRating'])
 
             if mangaid not in lastRow:
-                with open('mangaIDs.csv', 'a') as csvfile:
+                with open('mangaIDs.csv', 'a+', encoding='utf-8') as csvfile:
                     fieldnames = ['Title', 'MangaID', 'ContentRating']
-                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator = '\n')
                     writer.writerow({'Title': title, 'MangaID': mangaid, 'ContentRating': contentrating})
                     print("Title: " + title + " MangaID: " + mangaid + " ContentRating: " + contentrating)
             
             csvfile.close()
             
-
-
 if __name__ == '__main__':
     main()
